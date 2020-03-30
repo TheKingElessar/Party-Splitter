@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bwinvtweaks",
+  "name": "Bed Wars Inventory Tweaks",
+  "description": "Sorts your inventory to enhance your Bed Wars experience.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["TheKingElessar"],
+  "credits": "Idek man",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
