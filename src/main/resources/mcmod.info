@@ -5,7 +5,7 @@
   "description": "Sorts your inventory to enhance your Bed Wars experience.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/TheKingElessar/Bed-Wars-Inventory-Tweaks",
   "updateUrl": "",
   "authorList": ["TheKingElessar"],
   "credits": "Idek man",
