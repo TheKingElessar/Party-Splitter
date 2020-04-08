@@ -1,11 +1,11 @@
 [
 {
-  "modid": "bwinvtweaks",
-  "name": "Bed Wars Inventory Tweaks",
-  "description": "Sorts your inventory to enhance your Bed Wars experience.",
+  "modid": "trashtalk",
+  "name": "Trash Talk",
+  "description": "A handy mod to aid your trash-talking.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "https://github.com/TheKingElessar/Bed-Wars-Inventory-Tweaks",
+  "url": "https://github.com/TheKingElessar/TrashTalk",
   "updateUrl": "",
   "authorList": ["TheKingElessar"],
   "credits": "Idek man",
