@@ -1,8 +1,12 @@
 ## Use
-### Keybind
+### Keybinds
 By default, pressing the U key sends one of the loaded messages. The messages are sent in order, cycling through the list, to avoid repeating the same one over and over again.
 
-The key used to send a message can be changed like any other keybind (it's found at the bottom of the Controls menu).
+The default keybind to toggle the use of `/shout` (primarily for Hypixel) is T.
+
+The default keybind to reload the messages (if you've made changes to the file) is P.
+
+All these can be changed like any other keybind (found at the bottom of the Controls menu).
 
 ### Messages
 These are the preset messages loaded by default.
