@@ -1,5 +1,5 @@
 {
-  "messages": [
+  "insults": [
     "Just go back to single-player. At least THERE you can play in Peaceful mode.",
     "Not even close",
     "Hey, it's alright. Maybe someday you'll learn to left click.",
@@ -7,14 +7,25 @@
     "Seriously? Is that the best you can do? I'd rather fight bots.",
     "I didn't realize Minecraft was used to train Stormtroopers!",
     "you fool. you absolute buffoon. you really think you can challenge me in my own realm?",
-    "What the jiminy crickets did you just flaming do to me, you little bozo? You’re done, kiddo.",
+    "What the jiminy crickets did you just flaming do to me, you little bozo? You\u0027re done, kiddo.",
     "Just as the founding fathers intended.",
-    "Oh, that’s right, yeah just go cry to your father you little weasel. That'll help.",
+    "Oh, that\u0027s right, yeah just go cry to your father you little weasel. That'll help.",
     "God save the Queen.",
     "You don't have to be a military general. It's just... it would help if you knew how to play.",
     "where were u when player die ? i was in minecraft playing game when chat show. \"n00b is kill\"",
     "ｇｇ ｅｚ",
     "You ruined my video game. I ruined your life.",
-    "Sir this is a Wendy's"
+    "Sir this is a Wendy's",
+    "Bro you just got straight yeeted on",
+    "Maybe you should consider getting some hacks.",
+    "Your aim was just a *little* off."
+  ],
+
+  "encouragement": [
+    "Nice job!",
+    "That was impressive",
+    "You go, girl!",
+    "Good work!",
+    "Dang, you're good at the game!"
   ]
 }
