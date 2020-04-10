@@ -1,59 +1,74 @@
 package com.thekingelessar.trashtalk;
 
 import org.apache.commons.io.IOUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Scanner;
 
 public class ChatMessageHandler
 {
     
-    public static List<String> messagesList = new ArrayList();
-    public static int messageIndex = -1;
+    public static ArrayList<String> insultList = new ArrayList<String>();
+    public static ArrayList<String> encouragementList = new ArrayList<String>();
+    
+    public static int insultIndex = -1;
+    public static int encouragementIndex = -1;
+    
     public static boolean useShout = false;
+    public static boolean useEncouragement = false;
     
     public ChatMessageHandler()
     {
         loadMessages();
     }
     
-    public static String getMessage()
+    public static String getInsult()
     {
-        if (!(messageIndex >= (messagesList.size() - 1)))
+        if (!(insultIndex >= (insultList.size() - 1)))
         {
-            messageIndex++;
+            insultIndex++;
         }
         else
         {
-            messageIndex = 0;
+            insultIndex = 0;
         }
-        return messagesList.get(messageIndex);
+        return insultList.get(insultIndex);
     }
+    
+    public static String getEncouragement()
+    {
+        if (!(encouragementIndex >= (encouragementList.size() - 1)))
+        {
+            encouragementIndex++;
+        }
+        else
+        {
+            encouragementIndex = 0;
+        }
+        return encouragementList.get(encouragementIndex);
+    }
+    
     
     public void loadMessages()
     {
-        JSONParser parser = new JSONParser();
         try
         {
-            Object parsedFile;
-            
+            String fileContents;
             File f = new File("./mods/TTMessages.json");
             System.out.println("Attempting to read from file: " + f.getCanonicalPath());
             
             if (f.exists() && !f.isDirectory())
             {
+                Scanner scanner = new Scanner(f);
+                fileContents = scanner.useDelimiter("\\A").next();
+                scanner.close();
                 System.out.println("TTMessages.json found.");
-                parsedFile = parser.parse(new FileReader(f));
             }
             else
             {
@@ -66,32 +81,31 @@ public class ChatMessageHandler
                     throw new Exception("Resource not found: " + respath);
                 }
                 
-                String internalFileString = IOUtils.toString(in, StandardCharsets.UTF_8);
-                parsedFile = parser.parse(internalFileString);
+                fileContents = IOUtils.toString(in, "UTF-8");
                 
                 PrintWriter writer = new PrintWriter("./mods/TTMessages.json", "UTF-8");
-                writer.println(internalFileString);
+                writer.println(fileContents);
                 writer.close();
                 System.out.println("TTMessages.json file created.");
             }
             
-            // A JSON object. Key value pairs are unordered. JSONObject supports java.util.Map interface.
-            JSONObject jsonObject = (JSONObject) parsedFile;
+            JSONObject fullJSONObject = new JSONObject(fileContents);
+            JSONArray insultArray = fullJSONObject.getJSONArray("insults");
+            JSONArray encouragementArray = fullJSONObject.getJSONArray("encouragement");
             
-            // A JSON array. JSONObject supports java.util.List interface.
-            JSONArray messageList = (JSONArray) jsonObject.get("messages");
-            
-            // An iterator over a collection. Iterator takes the place of Enumeration in the Java Collections Framework.
-            // Iterators differ from enumerations in two ways:
-            // 1. Iterators allow the caller to remove elements from the underlying collection during the iteration with well-defined semantics.
-            // 2. Method names have been improved.
-            Iterator<JSONObject> iterator = messageList.iterator();
-            while (iterator.hasNext())
+            for (int i = 0; i < insultArray.length(); i++)
             {
-                messagesList.add(((Object) iterator.next()).toString());
+                insultList.add(insultArray.getString(i));
             }
             
-            Collections.shuffle(messageList);
+            for (int i = 0; i < encouragementArray.length(); i++)
+            {
+                encouragementList.add(encouragementArray.getString(i));
+            }
+            
+            Collections.shuffle(insultList);
+            Collections.shuffle(encouragementList);
+            
         }
         catch (Exception e)
         {
