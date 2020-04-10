@@ -12,7 +12,7 @@ import org.lwjgl.input.Keyboard;
 public class TrashTalk
 {
     public static final String MODID = "trashtalk";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.2";
     
     public static KeyBinding[] keyBindings;
     public static ChatMessageHandler chatMessageHandler = new ChatMessageHandler();
@@ -23,16 +23,18 @@ public class TrashTalk
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(this);
         
-        keyBindings = new KeyBinding[3];
+        keyBindings = new KeyBinding[4];
         
         // instantiate the key bindings
-        keyBindings[0] = new KeyBinding("key.sendtrashtalk", Keyboard.KEY_R, "key.categories.TrashTalk"); // todo: make these look nicer in the options
-        keyBindings[1] = new KeyBinding("key.reloadtrashtalk", Keyboard.KEY_P, "key.categories.TrashTalk");
-        keyBindings[2] = new KeyBinding("key.toggleuseshout", Keyboard.KEY_T, "key.categories.TrashTalk");
+        keyBindings[0] = new KeyBinding("Send Insult", Keyboard.KEY_T, "Trash Talk"); // todo: make these look nicer in the options
+        keyBindings[1] = new KeyBinding("Toggle insult/encouragement", Keyboard.KEY_G, "Trash Talk"); // todo: make these look nicer in the options
+        keyBindings[2] = new KeyBinding("Toggle /shout", Keyboard.KEY_B, "Trash Talk");
+        keyBindings[3] = new KeyBinding("Reload Messages", Keyboard.KEY_P, "Trash Talk");
         
         ClientRegistry.registerKeyBinding(keyBindings[0]);
         ClientRegistry.registerKeyBinding(keyBindings[1]);
         ClientRegistry.registerKeyBinding(keyBindings[2]);
+        ClientRegistry.registerKeyBinding(keyBindings[3]);
         
         MinecraftForge.EVENT_BUS.register(new TTEventHandler());
         
