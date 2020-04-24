@@ -1,10 +1,10 @@
 ## Use
 ### Keybinds
-`T` sends a message using the currently `/shout` toggle and message type.
+`T` sends a message. It uses the currently selected `/shout` mode and message type.
 
 `P` reloads the messages from the file in `mods`. This is useful if you want to make live changes to the messages.
 
-`G` toggles between insults and encouragment.
+`G` cycles through message types.
 
 `B` toggles `/shout`.
 
@@ -17,24 +17,21 @@ These are the preset messages loaded by default.
 {
   "insults": [
     "Just go back to single-player. At least THERE you can play in Peaceful mode.",
-    "Not even close",
+    "Not even close.",
     "Hey, it's alright. Maybe someday you'll learn to left click.",
     "Wow... and I thought *I* was bad at the game. You're on a whole 'nother level.",
-    "Seriously? Is that the best you can do? I'd rather fight bots.",
+    "Seriously? Is that the best you can do? I'd rather fight kindergartners.",
     "I didn't realize Minecraft was used to train Stormtroopers!",
-    "you fool. you absolute buffoon. you really think you can challenge me in my own realm?",
+    "you fool. you absolute buffoon. you really thought you could challenge me in my own realm?",
     "What the jiminy crickets did you just flaming do to me, you little bozo? You\u0027re done, kiddo.",
-    "Just as the founding fathers intended.",
-    "Oh, that\u0027s right, yeah just go cry to your father you little weasel. That'll help.",
-    "God save the Queen.",
-    "You don't have to be a military general. It's just... it would help if you knew how to play.",
-    "where were u when player die ? i was in minecraft playing game when chat show. \"n00b is kill\"",
-    "ｇｇ ｅｚ",
+    "You don't have to be a PhD candidate. It would just help if you knew how to play.",
+    "where were u when player die ? i was in minceraft playing game when chat show. \"n00b is kill\"",
+    "gg e-z",
     "You ruined my video game. I ruined your life.",
-    "Sir this is a Wendy's",
     "Bro you just got straight yeeted on",
-    "Maybe you should consider getting some hacks.",
-    "Your aim was just a *little* off."
+    "Your aim was just a *little* off.",
+    "L",
+    "Hey, can you take this L real quick?"
   ],
 
   "encouragement": [
@@ -43,9 +40,17 @@ These are the preset messages loaded by default.
     "You go, girl!",
     "Good work!",
     "Dang, you're good at the game!"
+  ],
+
+  "reaction": [
+    "Just as the founding fathers intended.",
+    "God save the Queen.",
+    "Sir this is a Wendy's",
+    "Amazing. A natural Minecraft player in their natural habitat."
   ]
 }
 ```
+
 #### Custom Messages
 Aside from the preset messages, *Trash Talk* has the ability to load user-defined messages if one wishes to add more or remove certain ones. All of this is done from the `TTMessages.json` file found in `.minecraft/mods/`. Most people's `.minecraft` directory is in `C:/Users/[Username]/AppData/Roaming/`.
 
@@ -58,8 +63,12 @@ Currently, all messages must be part of one of the preset categories. They must 
 ## Changelog
 ### Anticipated Changes:
  - Having each message be part of a certain category (Ranged, Melee, Team, etc.) and having each category be bound to a different key. This will produce messages that better fit one's situation.
- - Adding other types of messages, like or apologies.
+ - Adding other types of messages, like apologies.
 
+### 1.3
+ - Added a new message category "Encouragement." The selected message category is now changed using a single key, which cyles between the three.
+ - Added a few new messages and revised existing messages.
+ 
 ### 1.2
  - Added several new messages.
  - Added a new message category, "Encouragement."
