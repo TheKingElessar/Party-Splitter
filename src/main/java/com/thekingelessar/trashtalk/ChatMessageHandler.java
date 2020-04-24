@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,16 +17,29 @@ public class ChatMessageHandler
     
     public static ArrayList<String> insultList = new ArrayList<String>();
     public static ArrayList<String> encouragementList = new ArrayList<String>();
+    public static ArrayList<String> reactionList = new ArrayList<String>();
     
     public static int insultIndex = -1;
     public static int encouragementIndex = -1;
+    public static int reactionIndex = -1;
     
-    public static boolean useShout = false;
+    public static String useShout = "";
+    
+    public static String[] currentCategoryArray = {"insult", "encouragement", "reaction"};
+    public static int currentCategoryIndex = 0;
+    
     public static boolean useEncouragement = false;
     
     public ChatMessageHandler()
     {
         loadMessages();
+    }
+    
+    public enum MessageCategory
+    {
+        INSULT,
+        ENCOURAGEMENT,
+        REACTION
     }
     
     public static String getInsult()
@@ -52,6 +66,19 @@ public class ChatMessageHandler
             encouragementIndex = 0;
         }
         return encouragementList.get(encouragementIndex);
+    }
+    
+    public static String getReaction()
+    {
+        if (!(reactionIndex >= (reactionList.size() - 1)))
+        {
+            reactionIndex++;
+        }
+        else
+        {
+            reactionIndex = 0;
+        }
+        return reactionList.get(reactionIndex);
     }
     
     
@@ -92,6 +119,7 @@ public class ChatMessageHandler
             JSONObject fullJSONObject = new JSONObject(fileContents);
             JSONArray insultArray = fullJSONObject.getJSONArray("insults");
             JSONArray encouragementArray = fullJSONObject.getJSONArray("encouragement");
+            JSONArray reactionArray = fullJSONObject.getJSONArray("reaction");
             
             for (int i = 0; i < insultArray.length(); i++)
             {
@@ -103,14 +131,72 @@ public class ChatMessageHandler
                 encouragementList.add(encouragementArray.getString(i));
             }
             
+            for (int i = 0; i < reactionArray.length(); i++)
+            {
+                reactionList.add(reactionArray.getString(i));
+            }
+            
+            
             Collections.shuffle(insultList);
             Collections.shuffle(encouragementList);
+            Collections.shuffle(reactionList);
             
         }
         catch (Exception e)
         {
-            System.out.println("ERROR! YOUR \"TTMessages.json\" FILE IS FORMATTED INCORRECTLY. Try using https://jsonlint.com/ to check it.");
+            System.out.println("ERROR! YOUR \"TTMessages.json\" FILE IS FORMATTED INCORRECTLY. Try using https://jsonlint.com/ to check it. Loading preset messages.");
             e.printStackTrace();
+            
+            String respath = "/messages/TTMessages.json";
+            InputStream in = ChatMessageHandler.class.getResourceAsStream(respath);
+            if (in == null)
+            {
+                try
+                {
+                    throw new Exception("Resource not found: " + respath);
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+            
+            try
+            {
+                String fileContents = IOUtils.toString(in, "UTF-8");
+                
+                JSONObject fullJSONObject = new JSONObject(fileContents);
+                JSONArray insultArray = fullJSONObject.getJSONArray("insults");
+                JSONArray encouragementArray = fullJSONObject.getJSONArray("encouragement");
+                JSONArray reactionArray = fullJSONObject.getJSONArray("reaction");
+                
+                for (int i = 0; i < insultArray.length(); i++)
+                {
+                    insultList.add(insultArray.getString(i));
+                }
+                
+                for (int i = 0; i < encouragementArray.length(); i++)
+                {
+                    encouragementList.add(encouragementArray.getString(i));
+                }
+                System.out.println(encouragementList);
+                
+                for (int i = 0; i < reactionArray.length(); i++)
+                {
+                    reactionList.add(reactionArray.getString(i));
+                }
+                
+                
+                Collections.shuffle(insultList);
+                Collections.shuffle(encouragementList);
+                Collections.shuffle(reactionList);
+                
+            }
+            catch (IOException ex)
+            {
+                ex.printStackTrace();
+            }
+            
         }
         
     }
