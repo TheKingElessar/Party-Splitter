@@ -2,6 +2,7 @@ package com.thekingelessar.trashtalk;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
@@ -10,9 +11,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
 
 import static com.thekingelessar.trashtalk.ChatMessageHandler.*;
 import static com.thekingelessar.trashtalk.TrashTalk.chatMessageHandler;
+import static org.lwjgl.input.Keyboard.KEY_F3;
 
 public class TTEventHandler
 {
@@ -23,7 +26,7 @@ public class TTEventHandler
         
         KeyBinding[] keyBindings = TrashTalk.keyBindings;
         
-        if (keyBindings[0].isPressed())
+        if (keyBindings[0].isPressed() && !isDebugKeyDown())
         {
             
             EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;
@@ -43,7 +46,7 @@ public class TTEventHandler
             
         }
         
-        if (keyBindings[1].isPressed()) // cycle category
+        if (keyBindings[1].isPressed() && !isDebugKeyDown()) // cycle category
         {
             //     useEncouragement = !useEncouragement;
             
@@ -78,10 +81,10 @@ public class TTEventHandler
                     categoryMessage = "Wait something went wrong I have no idea";
                     break;
             }
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE.toString() + EnumChatFormatting.BOLD.toString() + "Trash Talk\n" + EnumChatFormatting.RESET.toString() + "You are currently spitting: " + messageColor + categoryMessage));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE.toString() + EnumChatFormatting.BOLD.toString() + "[Trash Talk] " + EnumChatFormatting.RESET.toString() + "You are currently spitting: " + messageColor + categoryMessage));
         }
         
-        if (keyBindings[2].isPressed())
+        if (keyBindings[2].isPressed() && !isDebugKeyDown())
         {
             if (useShout.isEmpty())
             {
@@ -104,15 +107,21 @@ public class TTEventHandler
             
             boolean shoutEnabled = !useShout.isEmpty();
             
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE.toString() + EnumChatFormatting.BOLD.toString() + "Trash Talk\n" + EnumChatFormatting.RESET.toString() + "Use /shout set to: " + shoutColor + shoutEnabled));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE.toString() + EnumChatFormatting.BOLD.toString() + "[Trash Talk] " + EnumChatFormatting.RESET.toString() + "Use /shout set to: " + shoutColor + shoutEnabled));
         }
         
-        if (keyBindings[3].isPressed())
+        if (keyBindings[3].isPressed() && !isDebugKeyDown())
         {
             System.out.println("Reloading messages");
-            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE.toString() + EnumChatFormatting.BOLD.toString() + "Trash Talk\n" + EnumChatFormatting.RESET.toString() + "Reloading messages, noob. Maybe if you were good at the game you wouldn't need to do this, huh?\n"));
+            Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_PURPLE.toString() + EnumChatFormatting.BOLD.toString() + "[Trash Talk] " + EnumChatFormatting.RESET.toString() + "Reloading messages, noob. Maybe if you were good at the game you wouldn't need to do this, huh?\n"));
             chatMessageHandler.loadMessages();
         }
         
     }
+    
+    public static boolean isDebugKeyDown() {
+        return Keyboard.isKeyDown(KEY_F3);
+    }
+    
+    
 }
