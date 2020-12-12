@@ -102,6 +102,7 @@ public class CommandPartySplit extends CommandBase
     @SideOnly (Side.CLIENT)
     public void sendMessageToServer()
     {
+        currentPlayer.sendChatMessage("[PSPLIT Update]");
         currentPlayer.sendChatMessage("/p list");
         updatingParty = true;
         waitingListLeader = true;

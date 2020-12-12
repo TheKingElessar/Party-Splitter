@@ -32,7 +32,7 @@ public class PSChatHandlerRenewed
             }
         }
         
-        if (fullMessage.contains("You have joined ")) //  || fullMessage.contains("You'll be partying with: ")
+        if (fullMessage.contains("You have joined ") || fullMessage.contains("[PSPLIT Update]")) //  || fullMessage.contains("You'll be partying with: ")
         {
             currentPlayer.sendChatMessage("/pchat [PSPLIT Enabled] " + currentPlayer.getName());
         }
