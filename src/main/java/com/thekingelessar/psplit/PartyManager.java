@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.thekingelessar.psplit.PSplit.currentPlayer;
+import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledCommands;
 import static com.thekingelessar.psplit.PSplit.psplitPrefix;
+import static net.minecraft.client.Minecraft.getMinecraft;
 
 public class PartyManager
 {
@@ -55,7 +56,7 @@ public class PartyManager
         int partySize = partyModMemberList.size();
         if (partySize != 4)
         {
-            currentPlayer.addChatMessage(new ChatComponentText(psplitPrefix + String.format("Your party has %s members, not 4 members!", partySize)));
+            getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + String.format("Your party has %s members, not 4 members!", partySize)));
             return;
         }
         
@@ -85,14 +86,14 @@ public class PartyManager
         mainMember = partyListCopy.get(randomizer.nextInt(partyListCopy.size()));
         party1.add(mainMember);
         
-        currentPlayer.sendChatMessage(String.format("/pchat [PSPLIT] Party 1: %s, %s", partyLeader, mainMember));
-        currentPlayer.sendChatMessage(String.format("/pchat [PSPLIT] Party 2: %s, %s", otherLeader, otherMember));
-        currentPlayer.sendChatMessage(String.format("/pchat [PSPLIT] Once your party is formed, message me: /tell %s party_creation_finished", partyLeader));
+        scheduledCommands.add(String.format("/pchat [PSPLIT] Party 1: %s, %s", partyLeader, mainMember));
+        scheduledCommands.add(String.format("/pchat [PSPLIT] Party 2: %s, %s", otherLeader, otherMember));
+        scheduledCommands.add(String.format("/pchat [PSPLIT] Once your party is formed, message me: /tell %s party_creation_finished", partyLeader));
         
         for (String player : party2)
         {
             System.out.println("removing " + player);
-            currentPlayer.sendChatMessage("/p remove " + player);
+            scheduledCommands.add("/p remove " + player);
         }
         
         waitingForConfimation = true;
@@ -210,7 +211,7 @@ public class PartyManager
             partyModMemberList.addAll(partyModeratorList);
             partyModMemberList.addAll(partyMemberList);
             
-            currentPlayer.addChatMessage(new ChatComponentText(psplitPrefix + String.format("%s's party: " + partyModMemberList, getPartyLeader())));
+            getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + String.format("%s's party: " + partyModMemberList, getPartyLeader())));
             
             updatingParty = false;
             

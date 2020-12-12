@@ -7,12 +7,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Arrays;
 
-import static com.thekingelessar.psplit.PSplit.currentPlayer;
+import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledCommands;
 import static com.thekingelessar.psplit.PartyManager.*;
 import static com.thekingelessar.psplit.SelfManager.waitingForInvite;
 import static com.thekingelessar.psplit.SelfManager.waitingForKick;
-import static com.thekingelessar.psplit.ServerJoinEventHandler.hasChatCooldown;
-import static com.thekingelessar.psplit.ServerJoinEventHandler.testingRank;
+import static net.minecraft.client.Minecraft.getMinecraft;
 
 public class PSChatHandlerRenewed
 {
@@ -21,20 +20,22 @@ public class PSChatHandlerRenewed
     public void onChatRecievedEvent(ClientChatReceivedEvent chatEvent)
     {
         String fullMessage = chatEvent.message.getUnformattedText();
-
+        
         if (updatingParty)
         {
             if (!fullMessage.contains("You are not currently in a party."))
             {
                 PartyManager.updateParty(chatEvent);
-            } else {
+            }
+            else
+            {
                 updatingParty = false;
             }
         }
         
         if (fullMessage.contains("You have joined ") || fullMessage.contains("[PSPLIT Update]")) //  || fullMessage.contains("You'll be partying with: ")
         {
-            currentPlayer.sendChatMessage("/pchat [PSPLIT Enabled] " + currentPlayer.getName());
+            scheduledCommands.add("/pchat [PSPLIT Enabled] " + getMinecraft().thePlayer.getName());
         }
         
         if (fullMessage.contains("[PSPLIT Enabled] "))
@@ -57,7 +58,7 @@ public class PSChatHandlerRenewed
                 {
                     waitingForConfimation = false;
                     currentlySplitting = false;
-                    currentPlayer.sendChatMessage("/duel " + otherLeader);
+                    scheduledCommands.add("/duel " + otherLeader);
                 }
             }
         }
@@ -93,11 +94,11 @@ public class PSChatHandlerRenewed
             if (fullMessage.contains("You have been kicked from the party by "))
             {
                 String[] kickMessage = fullMessage.split(" ");
-                currentPlayer.addChatMessage(new ChatComponentText("lol okay " + Arrays.toString(kickMessage)));
+                getMinecraft().thePlayer.addChatMessage(new ChatComponentText("lol okay " + Arrays.toString(kickMessage)));
                 if (kickMessage[kickMessage.length - 1].contains(partyLeader)) // Todo not working
                 {
                     waitingForKick = false;
-                    currentPlayer.sendChatMessage("/p " + otherMember);
+                    scheduledCommands.add("/p " + otherMember);
                 }
             }
         }
@@ -107,7 +108,7 @@ public class PSChatHandlerRenewed
         {
             if (waitingForOtherMember)
             {
-                currentPlayer.sendChatMessage(String.format("/tell %s party_creation_finished", partyLeader));
+                scheduledCommands.add(String.format("/tell %s party_creation_finished", partyLeader));
             }
         }
         
@@ -122,9 +123,9 @@ public class PSChatHandlerRenewed
                     messageList[2] = messageList[2].replace(":", "");
                     if (messageList[2].contains(partyLeader) && messageList[3].contains("reform_party"))
                     {
-                        currentPlayer.sendChatMessage("/pchat [PSPLIT] Reform party");
-                        currentPlayer.sendChatMessage("/p disband");
-                        currentPlayer.sendChatMessage("/p accept " + partyLeader);
+                        scheduledCommands.add("/pchat [PSPLIT] Reform party");
+                        scheduledCommands.add("/p disband");
+                        scheduledCommands.add("/p accept " + partyLeader);
                     }
                 }
                 else
@@ -132,9 +133,9 @@ public class PSChatHandlerRenewed
                     messageList[1] = messageList[1].replace(":", "");
                     if (messageList[1].contains(partyLeader) && messageList[2].contains("reform_party"))
                     {
-                        currentPlayer.sendChatMessage("/pchat [PSPLIT] Reform party");
-                        currentPlayer.sendChatMessage("/p disband");
-                        currentPlayer.sendChatMessage("/p accept " + partyLeader);
+                        scheduledCommands.add("/pchat [PSPLIT] Reform party");
+                        scheduledCommands.add("/p disband");
+                        scheduledCommands.add("/p accept " + partyLeader);
                     }
                     
                 }
@@ -151,20 +152,9 @@ public class PSChatHandlerRenewed
             // FrozenFruit has invited you to join their party!
             if (fullMessage.contains(partyLeader + "has invited you to join their party!"))
             {
-                currentPlayer.sendChatMessage("/p accept " + partyLeader);
+                scheduledCommands.add("/p accept " + partyLeader);
             }
         }
-        
-        if (testingRank)
-        {
-            if (fullMessage.contains("You must be vip or higher to use this command!"))
-            {
-                testingRank = false;
-                hasChatCooldown = true;
-                System.out.println("Has chat cooldown " + hasChatCooldown);
-            }
-        }
-        
     }
     
 }

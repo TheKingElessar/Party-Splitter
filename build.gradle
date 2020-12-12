@@ -75,13 +75,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    provided('org.spongepowered:mixin:0.7.11-SNAPSHOT') {
-        exclude module: 'launchwrapper'
-        exclude module: 'guava'
-        exclude module: 'gson'
-        exclude module: 'commons-io'
-        exclude module: 'log4j-core'
-    }
+    runtime files('libs/chatcooldownmanager-1.1.jar')
+
 }
 
 processResources
@@ -109,16 +104,4 @@ jar {
     from configurations.provided.asFileTree.files.collect {
         zipTree(it)
     }
-
-    manifest.attributes(
-            'MixinConfigs': 'mixins.psplit.json',
-            'TweakOrder': '0',
-            'TweakClass': 'com.thekingelessar.psplit.mixins.PSPLITTweaker'
-            //'FMLCorePlugin': 'zone.nora.colourchat.launch.tweaker.ColourChatTweaker'
-    )
-}
-
-mixin {
-    defaultObfuscationEnv searge
-    add sourceSets.main, "mixins.psplit.refmap.json"
 }

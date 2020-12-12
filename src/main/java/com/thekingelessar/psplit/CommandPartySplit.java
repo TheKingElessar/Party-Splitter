@@ -8,10 +8,13 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.thekingelessar.psplit.PSplit.currentPlayer;
+import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledChat;
+import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledCommands;
 import static com.thekingelessar.psplit.PSplit.psplitPrefix;
 import static com.thekingelessar.psplit.PartyManager.*;
+import static net.minecraft.client.Minecraft.getMinecraft;
 
+@SideOnly (Side.CLIENT)
 public class CommandPartySplit extends CommandBase
 {
     
@@ -52,7 +55,6 @@ public class CommandPartySplit extends CommandBase
             }
             catch (Exception e)
             {
-                System.out.println("[PSPLIT] " + "Tried to send a message to the server, but can't because this isn't a client. This mod is made for clients.");
                 return;
             }
         }
@@ -66,7 +68,6 @@ public class CommandPartySplit extends CommandBase
             }
             catch (Exception e)
             {
-                System.out.println("[PSPLIT] " + "Tried to send a message to the server, but can't because this isn't a client. This mod is made for clients.");
                 return;
             }
         }
@@ -74,16 +75,16 @@ public class CommandPartySplit extends CommandBase
         {
             if (currentlySplitting)
             {
-                currentPlayer.addChatMessage(new ChatComponentText(psplitPrefix + "You're already splitting the party. To reset, use " + ChatFormatting.YELLOW + "/psplit reset"));
+                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + "You're already splitting the party. To reset, use " + ChatFormatting.YELLOW + "/psplit reset"));
             }
-            else if (getPartyLeader().equals(currentPlayer.getName()))
+            else if (getPartyLeader().equals(getMinecraft().thePlayer.getName()))
             {
                 currentlySplitting = true;
                 shuffleTeams();
             }
             else
             {
-                currentPlayer.addChatMessage(new ChatComponentText(psplitPrefix + "You must be the party leader to split the party."));
+                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + "You must be the party leader to split the party."));
             }
             return;
         }
@@ -91,9 +92,9 @@ public class CommandPartySplit extends CommandBase
         {
             if (otherLeader != null)
             {
-                currentPlayer.sendChatMessage(String.format("/tell %s reform_party", otherLeader));
-                currentPlayer.sendChatMessage(String.format("/p %s", otherLeader));
-                currentPlayer.sendChatMessage(String.format("/p %s", otherMember));
+                scheduledCommands.add(String.format("/tell %s reform_party", otherLeader));
+                scheduledCommands.add(String.format("/p %s", otherLeader));
+                scheduledCommands.add(String.format("/p %s", otherMember));
             }
             return;
         }
@@ -102,8 +103,8 @@ public class CommandPartySplit extends CommandBase
     @SideOnly (Side.CLIENT)
     public void sendMessageToServer()
     {
-        currentPlayer.sendChatMessage("[PSPLIT Update]");
-        currentPlayer.sendChatMessage("/p list");
+        scheduledChat.add("[PSPLIT Update]");
+        scheduledCommands.add("/p list");
         updatingParty = true;
         waitingListLeader = true;
     }
