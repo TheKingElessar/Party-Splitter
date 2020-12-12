@@ -1,0 +1,9 @@
+{
+  "compatibilityLevel": "JAVA_6",
+  "package": "com.thekingelessar.psplit.mixins",
+  "refmap": "mixins.psplit.refmap.json",
+  "verbose": true,
+  "mixins": [
+    "MixinEntityPlayerSP"
+  ]
+}

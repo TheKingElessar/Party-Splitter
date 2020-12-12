@@ -1,0 +1,16 @@
+[
+{
+  "modid": "psplit",
+  "name": "Party Splitter",
+  "description": "Don't you know—you NEVER split the party!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/TheKingElessar/Party-Splitter",
+  "updateUrl": "",
+  "authorList": ["TheKingElessar"],
+  "credits": "Authored by TheKingElessar, based on an idea from Ixon.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
