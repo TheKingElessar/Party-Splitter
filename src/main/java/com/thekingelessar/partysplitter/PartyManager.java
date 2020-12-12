@@ -1,4 +1,4 @@
-package com.thekingelessar.psplit;
+package com.thekingelessar.partysplitter;
 
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledCommands;
-import static com.thekingelessar.psplit.PSplit.psplitPrefix;
+import static com.thekingelessar.partysplitter.PSplit.PSPLIT_PREFIX;
 import static net.minecraft.client.Minecraft.getMinecraft;
 
 public class PartyManager
@@ -56,7 +56,7 @@ public class PartyManager
         int partySize = partyModMemberList.size();
         if (partySize != 4)
         {
-            getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + String.format("Your party has %s members, not 4 members!", partySize)));
+            getMinecraft().thePlayer.addChatMessage(new ChatComponentText(PSPLIT_PREFIX + String.format("Your party has %s members, not 4 members!", partySize)));
             return;
         }
         
@@ -211,7 +211,7 @@ public class PartyManager
             partyModMemberList.addAll(partyModeratorList);
             partyModMemberList.addAll(partyMemberList);
             
-            getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + String.format("%s's party: " + partyModMemberList, getPartyLeader())));
+            getMinecraft().thePlayer.addChatMessage(new ChatComponentText(PSPLIT_PREFIX + String.format("%s's party: " + partyModMemberList, getPartyLeader())));
             
             updatingParty = false;
             

@@ -1,4 +1,4 @@
-package com.thekingelessar.psplit;
+package com.thekingelessar.partysplitter;
 
 public class SelfManager
 {

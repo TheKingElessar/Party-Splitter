@@ -1,4 +1,4 @@
-package com.thekingelessar.psplit;
+package com.thekingelessar.partysplitter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

@@ -1,4 +1,4 @@
-package com.thekingelessar.psplit;
+package com.thekingelessar.partysplitter;
 
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
@@ -8,9 +8,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import java.util.Arrays;
 
 import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledCommands;
-import static com.thekingelessar.psplit.PartyManager.*;
-import static com.thekingelessar.psplit.SelfManager.waitingForInvite;
-import static com.thekingelessar.psplit.SelfManager.waitingForKick;
+import static com.thekingelessar.partysplitter.PSplit.PSPLIT_PREFIX;
+import static com.thekingelessar.partysplitter.PartyManager.*;
+import static com.thekingelessar.partysplitter.SelfManager.waitingForInvite;
+import static com.thekingelessar.partysplitter.SelfManager.waitingForKick;
 import static net.minecraft.client.Minecraft.getMinecraft;
 
 public class PSChatHandlerRenewed
@@ -91,12 +92,16 @@ public class PSChatHandlerRenewed
         // You have been kicked from the party by Cyberes
         if (waitingForKick)
         {
+            
             if (fullMessage.contains("You have been kicked from the party by "))
             {
+                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(PSPLIT_PREFIX + "Still waiting on that kick message..."));
+    
                 String[] kickMessage = fullMessage.split(" ");
-                getMinecraft().thePlayer.addChatMessage(new ChatComponentText("lol okay " + Arrays.toString(kickMessage)));
+                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(PSPLIT_PREFIX + "Kick message: " + Arrays.toString(kickMessage)));
                 if (kickMessage[kickMessage.length - 1].contains(partyLeader)) // Todo not working
                 {
+                    getMinecraft().thePlayer.addChatMessage(new ChatComponentText(PSPLIT_PREFIX + "Kick message is from " + partyLeader));
                     waitingForKick = false;
                     scheduledCommands.add("/p " + otherMember);
                 }

@@ -1,4 +1,4 @@
-package com.thekingelessar.psplit;
+package com.thekingelessar.partysplitter;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import net.minecraft.command.CommandBase;
@@ -10,8 +10,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledChat;
 import static com.thekingelessar.chatcooldownmanager.TickHandler.scheduledCommands;
-import static com.thekingelessar.psplit.PSplit.psplitPrefix;
-import static com.thekingelessar.psplit.PartyManager.*;
+import static com.thekingelessar.partysplitter.PSplit.PSPLIT_PREFIX;
+import static com.thekingelessar.partysplitter.PartyManager.*;
 import static net.minecraft.client.Minecraft.getMinecraft;
 
 @SideOnly (Side.CLIENT)
@@ -75,7 +75,7 @@ public class CommandPartySplit extends CommandBase
         {
             if (currentlySplitting)
             {
-                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + "You're already splitting the party. To reset, use " + ChatFormatting.YELLOW + "/psplit reset"));
+                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(PSPLIT_PREFIX + "You're already splitting the party. To reset, use " + ChatFormatting.YELLOW + "/psplit reset"));
             }
             else if (getPartyLeader().equals(getMinecraft().thePlayer.getName()))
             {
@@ -84,7 +84,7 @@ public class CommandPartySplit extends CommandBase
             }
             else
             {
-                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(psplitPrefix + "You must be the party leader to split the party."));
+                getMinecraft().thePlayer.addChatMessage(new ChatComponentText(PSPLIT_PREFIX + "You must be the party leader to split the party."));
             }
             return;
         }
